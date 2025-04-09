@@ -13,6 +13,7 @@ const mockDoctors = [
   {
     id: '1',
     name: 'Dr. Rato',
+    email:'rato@example.com',
     role: 'doctor' as const,
     specialty: 'Cardiologista',
     image: 'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSpefQpRFzgJOBdMo7CRy2-Mig9-jMrrJAwO0WJwXbg6Ho0zSHrQNSOFyFXFoV1ShY1D6-2kXlobLkkLfuarmlN1g',
@@ -20,6 +21,7 @@ const mockDoctors = [
  {
   id: '2',
   name: 'Dra. Rata',
+  email:'rata@example.com',
   role: 'doctor' as const,
   specialty: 'Dermatologista',
   image: 'https://static.sbt.com.br/noticias/images/139012.jpg',
@@ -27,6 +29,7 @@ const mockDoctors = [
 {
   id: '3',
   name: 'Dr. FAUSTO',
+  email:'fausto@example.com',
   role: 'doctor' as const,
   specialty: 'Oftalmologista',
   image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBarhs52ixfj2Nk-7DfDQ-7OjfJa96_8dMiw&s',
