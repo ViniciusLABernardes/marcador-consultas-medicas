@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useFocusEffect } from '@react-navigation/native';
 import { RootStackParamList } from '../types/navigation';
-import theme from '../styles/themes';
+import theme from '../styles/theme';
 import Header from '../components/Header';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -18,7 +18,7 @@ type PatientDashboardScreenProps = {
 interface Appointment {
   id: string;
   patientId: string;
-  patientName:string;
+  patientName: string;
   doctorId: string;
   doctorName: string;
   date: string;
@@ -102,7 +102,13 @@ const PatientDashboardScreen: React.FC = () => {
           containerStyle={styles.button as ViewStyle}
           buttonStyle={styles.buttonStyle}
         />
-     
+        <Button
+          title="Configurações"
+          onPress={() => navigation.navigate('Settings')}
+          containerStyle={styles.button as ViewStyle}
+          buttonStyle={styles.settingsButton}
+        />
+
         {loading ? (
           <LoadingText>Carregando consultas...</LoadingText>
         ) : appointments.length === 0 ? (
@@ -111,18 +117,18 @@ const PatientDashboardScreen: React.FC = () => {
           appointments.map((appointment) => (
             <AppointmentCard key={appointment.id}>
               <ListItem.Content>
-              <ListItem.Subtitle style={styles.dateTime as TextStyle}>
-                {appointment.date} às {appointment.time}
-              </ListItem.Subtitle>
-              <Text style={styles.doctorName as TextStyle}>
-                {appointment.doctorName}
-              </Text>
-              <Text style={styles.specialty as TextStyle}>
-                {appointment.specialty}
-              </Text>
-              <ListItem.Title style={styles.patientName as TextStyle}>
-                Paciente: {appointment.patientName}
-              </ListItem.Title>
+                <ListItem.Title style={styles.patientName as TextStyle}>
+                  Paciente: {appointment.patientName}
+                </ListItem.Title>
+                <ListItem.Subtitle style={styles.dateTime as TextStyle}>
+                  {appointment.date} às {appointment.time}
+                </ListItem.Subtitle>
+                <Text style={styles.doctorName as TextStyle}>
+                  {appointment.doctorName}
+                </Text>
+                <Text style={styles.specialty as TextStyle}>
+                  {appointment.specialty}
+                </Text>
                 <StatusBadge status={appointment.status}>
                   <StatusText status={appointment.status}>
                     {getStatusText(appointment.status)}
@@ -145,12 +151,6 @@ const PatientDashboardScreen: React.FC = () => {
 };
 
 const styles = {
-
-  patientName: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: theme.colors.text,
-  },
   scrollContent: {
     padding: 20,
   },
@@ -180,6 +180,15 @@ const styles = {
     fontSize: 14,
     color: theme.colors.text,
     marginTop: 4,
+  },
+  patientName: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: theme.colors.text,
+  },
+  settingsButton: {
+  backgroundColor: theme.colors.secondary,
+  paddingVertical: 12,
   },
 };
 
