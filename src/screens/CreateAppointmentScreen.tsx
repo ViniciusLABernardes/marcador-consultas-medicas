@@ -6,11 +6,12 @@ import { useAuth } from '../contexts/AuthContext';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types/navigation';
-import theme from '../styles/themes';
+import theme from '../styles/theme';
 import Header from '../components/Header';
 import DoctorList from '../components/DoctorList';
 import TimeSlotList from '../components/TimeSlotList';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { notificationService } from '../services/notifications';
 
 type CreateAppointmentScreenProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'CreateAppointment'>;
@@ -19,7 +20,7 @@ type CreateAppointmentScreenProps = {
 interface Appointment {
   id: string;
   patientId: string;
-  patientName:string;
+  patientName: string;
   doctorId: string;
   doctorName: string;
   date: string;
@@ -27,6 +28,7 @@ interface Appointment {
   specialty: string;
   status: 'pending' | 'confirmed' | 'cancelled';
 }
+
 interface Doctor {
   id: string;
   name: string;
@@ -34,26 +36,40 @@ interface Doctor {
   image: string;
 }
 
+// Lista de médicos disponíveis
 const availableDoctors: Doctor[] = [
   {
     id: '1',
-    name: 'Dr. Rato',
-    specialty: 'Cardiologista',
-    image: 'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSpefQpRFzgJOBdMo7CRy2-Mig9-jMrrJAwO0WJwXbg6Ho0zSHrQNSOFyFXFoV1ShY1D6-2kXlobLkkLfuarmlN1g',
- },
- {
-  id: '2',
-  name: 'Dra. Rata',
-  specialty: 'Dermatologista',
-  image: 'https://static.sbt.com.br/noticias/images/139012.jpg',
-},
-{
-  id: '3',
-  name: 'Dr. FAUSTO',
-  specialty: 'Oftalmologista',
-  image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBarhs52ixfj2Nk-7DfDQ-7OjfJa96_8dMiw&s',
-}
-]
+    name: 'Dr. João Silva',
+    specialty: 'Cardiologia',
+    image: 'https://randomuser.me/api/portraits/men/1.jpg',
+  },
+  {
+    id: '2',
+    name: 'Dra. Maria Santos',
+    specialty: 'Pediatria',
+    image: 'https://randomuser.me/api/portraits/women/1.jpg',
+  },
+  {
+    id: '3',
+    name: 'Dr. Pedro Oliveira',
+    specialty: 'Ortopedia',
+    image: 'https://randomuser.me/api/portraits/men/2.jpg',
+  },
+  {
+    id: '4',
+    name: 'Dra. Ana Costa',
+    specialty: 'Dermatologia',
+    image: 'https://randomuser.me/api/portraits/women/2.jpg',
+  },
+  {
+    id: '5',
+    name: 'Dr. Carlos Mendes',
+    specialty: 'Oftalmologia',
+    image: 'https://randomuser.me/api/portraits/men/3.jpg',
+  },
+];
+
 const CreateAppointmentScreen: React.FC = () => {
   const { user } = useAuth();
   const navigation = useNavigation<CreateAppointmentScreenProps['navigation']>();
@@ -96,6 +112,9 @@ const CreateAppointmentScreen: React.FC = () => {
       // Salva lista atualizada
       await AsyncStorage.setItem('@MedicalApp:appointments', JSON.stringify(appointments));
 
+      // Envia notificação para o médico
+      await notificationService.notifyNewAppointment(selectedDoctor.id, newAppointment);
+
       alert('Consulta agendada com sucesso!');
       navigation.goBack();
     } catch (err) {
@@ -104,101 +123,101 @@ const CreateAppointmentScreen: React.FC = () => {
       setLoading(false);
     }
   };
-  
-return(
-  <Container>
-  <Header />
-  <ScrollView contentContainerStyle={styles.scrollContent}>
-    <Title>Agendar Consulta</Title>
 
-    <Input
-      placeholder="Data (DD/MM/AAAA)"
-      value={date}
-      onChangeText={setDate}
-      containerStyle={styles.input}
-      keyboardType="numeric"
-    />
+  return (
+    <Container>
+      <Header />
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        <Title>Agendar Consulta</Title>
 
-    <SectionTitle>Selecione um Horário</SectionTitle>
-    <TimeSlotList
-      onSelectTime={setSelectedTime}
-      selectedTime={selectedTime}
-    />
+        <Input
+          placeholder="Data (DD/MM/AAAA)"
+          value={date}
+          onChangeText={setDate}
+          containerStyle={styles.input}
+          keyboardType="numeric"
+        />
 
-    <SectionTitle>Selecione um Médico</SectionTitle>
-    <DoctorList
-      doctors={availableDoctors}
-      onSelectDoctor={setSelectedDoctor}
-      selectedDoctorId={selectedDoctor?.id}
-    />
+        <SectionTitle>Selecione um Horário</SectionTitle>
+        <TimeSlotList
+          onSelectTime={setSelectedTime}
+          selectedTime={selectedTime}
+        />
 
-    {error ? <ErrorText>{error}</ErrorText> : null}
+        <SectionTitle>Selecione um Médico</SectionTitle>
+        <DoctorList
+          doctors={availableDoctors}
+          onSelectDoctor={setSelectedDoctor}
+          selectedDoctorId={selectedDoctor?.id}
+        />
 
-    <Button
-      title="Agendar"
-      onPress={handleCreateAppointment}
-      loading={loading}
-      containerStyle={styles.button as ViewStyle}
-      buttonStyle={styles.buttonStyle}
-    />
+        {error ? <ErrorText>{error}</ErrorText> : null}
 
-    <Button
-      title="Cancelar"
-      onPress={() => navigation.goBack()}
-      containerStyle={styles.button as ViewStyle}
-      buttonStyle={styles.cancelButton}
-    />
-  </ScrollView>
-</Container>
-);
+        <Button
+          title="Agendar"
+          onPress={handleCreateAppointment}
+          loading={loading}
+          containerStyle={styles.button as ViewStyle}
+          buttonStyle={styles.buttonStyle}
+        />
+
+        <Button
+          title="Cancelar"
+          onPress={() => navigation.goBack()}
+          containerStyle={styles.button as ViewStyle}
+          buttonStyle={styles.cancelButton}
+        />
+      </ScrollView>
+    </Container>
+  );
 };
 
 const styles = {
-scrollContent: {
-padding: 20,
-},
-input: {
-marginBottom: 15,
-},
-button: {
-marginTop: 10,
-width: '100%',
-},
-buttonStyle: {
-backgroundColor: theme.colors.primary,
-paddingVertical: 12,
-},
-cancelButton: {
-backgroundColor: theme.colors.secondary,
-paddingVertical: 12,
-},
+  scrollContent: {
+    padding: 20,
+  },
+  input: {
+    marginBottom: 15,
+  },
+  button: {
+    marginTop: 10,
+    width: '100%',
+  },
+  buttonStyle: {
+    backgroundColor: theme.colors.primary,
+    paddingVertical: 12,
+  },
+  cancelButton: {
+    backgroundColor: theme.colors.secondary,
+    paddingVertical: 12,
+  },
 };
 
 const Container = styled.View`
-flex: 1;
-background-color: ${theme.colors.background};
+  flex: 1;
+  background-color: ${theme.colors.background};
 `;
 
 const Title = styled.Text`
-font-size: 24px;
-font-weight: bold;
-color: ${theme.colors.text};
-margin-bottom: 20px;
-text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: ${theme.colors.text};
+  margin-bottom: 20px;
+  text-align: center;
 `;
 
 const SectionTitle = styled.Text`
-font-size: 18px;
-font-weight: bold;
-color: ${theme.colors.text};
-margin-bottom: 10px;
-margin-top: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  color: ${theme.colors.text};
+  margin-bottom: 10px;
+  margin-top: 10px;
 `;
 
 const ErrorText = styled.Text`
-color: ${theme.colors.error};
-text-align: center;
-margin-bottom: 10px;
+  color: ${theme.colors.error};
+  text-align: center;
+  margin-bottom: 10px;
 `;
 
 export default CreateAppointmentScreen;
