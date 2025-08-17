@@ -38,31 +38,35 @@ const styles = {
 const Container = styled.View`
   background-color: ${theme.colors.primary};
   padding: 16px;
+  fontFamily: Arimo;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   border-bottom-width: 1px;
   border-bottom-color: ${theme.colors.border};
 `;
-
 const UserInfo = styled.View`
   flex-direction: row;
   align-items: center;
+  fontFamily: Arimo;
 `;
 
 const TextContainer = styled.View`
   margin-left: 12px;
+  fontFamily: Arimo;
 `;
 
 const WelcomeText = styled.Text`
   font-size: 14px;
   color: ${theme.colors.white};
   opacity: 0.9;
+  fontFamily: Arimo;
 `;
 
 const UserName = styled.Text`
   font-size: 18px;
   font-weight: bold;
+  fontFamily: Arimo;
   color: ${theme.colors.white};
 `;
 

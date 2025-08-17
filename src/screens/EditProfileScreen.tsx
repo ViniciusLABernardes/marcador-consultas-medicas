@@ -134,6 +134,7 @@ const EditProfileScreen: React.FC = () => {
         </ProfileCard>
 
         <Button
+         titleStyle={{fontFamily: 'Arimo'}}
           title="Salvar Alterações"
           onPress={handleSaveProfile}
           loading={loading}
@@ -142,6 +143,7 @@ const EditProfileScreen: React.FC = () => {
         />
 
         <Button
+        titleStyle={{fontFamily: 'Arimo'}}
           title="Cancelar"
           onPress={() => navigation.goBack()}
           containerStyle={styles.button as ViewStyle}
@@ -158,10 +160,12 @@ const styles = {
   },
   input: {
     marginBottom: 15,
+
   },
   button: {
     marginBottom: 15,
     width: '100%',
+    borderRadius: 20
   },
   saveButton: {
     backgroundColor: theme.colors.success,
@@ -180,6 +184,7 @@ const Container = styled.View`
 
 const Title = styled.Text`
   font-size: 24px;
+   fontFamily: Arimo;
   font-weight: bold;
   color: ${theme.colors.text};
   margin-bottom: 20px;
@@ -217,8 +222,8 @@ const RoleBadge = styled.View<{ role: string }>`
 const RoleText = styled.Text`
   color: ${theme.colors.text};
   font-size: 14px;
+   fontFamily: Arimo;
   font-weight: 500;
 `;
 
 export default EditProfileScreen;
-

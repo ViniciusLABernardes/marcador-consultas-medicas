@@ -62,7 +62,7 @@ const DoctorDashboardScreen: React.FC = () => {
   const navigation = useNavigation<DoctorDashboardScreenProps['navigation']>();
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [loading, setLoading] = useState(true);
-  const [statistics, setStatistics] = useState<Statistics | null>(null);
+  const [statistics, setStatistics] = useState<Partial<Statistics> | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
   const [actionType, setActionType] = useState<'confirm' | 'cancel'>('confirm');
@@ -76,10 +76,12 @@ const DoctorDashboardScreen: React.FC = () => {
           (appointment) => appointment.doctorId === user?.id
         );
         setAppointments(doctorAppointments);
-      }
 
-      const stats = await statisticsService.getDoctorStatistics(user.id);
-      setStatistics(stats);
+        if (user) {
+          const stats = await statisticsService.getDoctorStatistics(user.id);
+          setStatistics(stats);
+        }
+      }
     } catch (error) {
       console.error('Erro ao carregar consultas:', error);
     } finally {
@@ -87,7 +89,7 @@ const DoctorDashboardScreen: React.FC = () => {
     }
   };
 
-  const handleOpenModal = (appointment: Appointment, action: 'confirm' | 'cancel') => {
+const handleOpenModal = (appointment: Appointment, action: 'confirm' | 'cancel') => {
     setSelectedAppointment(appointment);
     setActionType(action);
     setModalVisible(true);
@@ -152,18 +154,22 @@ const DoctorDashboardScreen: React.FC = () => {
         <Title>Minhas Consultas</Title>
 
         <Button
+         titleStyle={{fontFamily: 'Arimo'}}
           title="Meu Perfil"
           onPress={() => navigation.navigate('Profile')}
           containerStyle={styles.button as ViewStyle}
           buttonStyle={styles.buttonStyle}
         />
+
         <Button
+         titleStyle={{fontFamily: 'Arimo'}}
           title="Configurações"
           onPress={() => navigation.navigate('Settings')}
           containerStyle={styles.button as ViewStyle}
           buttonStyle={styles.settingsButton}
         />
-        <SectionTitle>Estatísticas Médico</SectionTitle>
+
+        <SectionTitle>Estatísticas Gerais</SectionTitle>
         {statistics && (
           <StatisticsGrid>
             <StatisticsCard
@@ -179,22 +185,10 @@ const DoctorDashboardScreen: React.FC = () => {
               subtitle={`${statistics.statusPercentages.confirmed.toFixed(1)}% do total`}
             />
             <StatisticsCard
-              title="Consultas pendentes"
-              value={statistics.pendingAppointments}
-              color={theme.colors.warning}
-              subtitle={`${statistics.statusPercentages.confirmed.toFixed(1)}% do total`}
-            />
-            <StatisticsCard
-              title="Consultas canceladas"
+              title="Consultas Canceladas"
               value={statistics.cancelledAppointments}
               color={theme.colors.error}
-              subtitle="Consultas canceladas"
-            />
-            <StatisticsCard
-              title="Pacientes Ativos"
-              value={statistics.totalPatients}
-              color={theme.colors.secondary}
-              subtitle="Pacientes únicos"
+              subtitle={`${statistics.statusPercentages.confirmed.toFixed(1)}% do total`}
             />
           </StatisticsGrid>
         )}
@@ -240,12 +234,14 @@ const DoctorDashboardScreen: React.FC = () => {
                 {appointment.status === 'pending' && (
                   <ButtonContainer>
                     <Button
+                     titleStyle={{fontFamily: 'Arimo'}}
                       title="Confirmar"
                       onPress={() => handleOpenModal(appointment, 'confirm')}
                       containerStyle={styles.actionButton as ViewStyle}
                       buttonStyle={styles.confirmButton}
                     />
                     <Button
+                     titleStyle={{fontFamily: 'Arimo'}}
                       title="Cancelar"
                       onPress={() => handleOpenModal(appointment, 'cancel')}
                       containerStyle={styles.actionButton as ViewStyle}
@@ -259,11 +255,13 @@ const DoctorDashboardScreen: React.FC = () => {
         )}
 
         <Button
+         titleStyle={{fontFamily: 'Arimo'}}
           title="Sair"
           onPress={signOut}
           containerStyle={styles.button as ViewStyle}
           buttonStyle={styles.logoutButton}
         />
+
         {selectedAppointment && (
           <AppointmentActionModal
             visible={modalVisible}
@@ -291,10 +289,12 @@ const styles = {
   button: {
     marginBottom: 20,
     width: '100%',
+    borderRadius: 20
   },
   buttonStyle: {
     backgroundColor: theme.colors.primary,
     paddingVertical: 12,
+    
   },
   logoutButton: {
     backgroundColor: theme.colors.error,
@@ -328,8 +328,8 @@ const styles = {
     color: theme.colors.text,
   },
   settingsButton: {
-  backgroundColor: theme.colors.secondary,
-  paddingVertical: 12,
+    backgroundColor: theme.colors.secondary,
+    paddingVertical: 12,
   },
 };
 
@@ -339,6 +339,7 @@ const Container = styled.View`
 `;
 
 const Title = styled.Text`
+  fontFamily: Arimo;
   font-size: 24px;
   font-weight: bold;
   color: ${theme.colors.text};
@@ -350,6 +351,7 @@ const AppointmentCard = styled(ListItem)`
   background-color: ${theme.colors.background};
   border-radius: 8px;
   margin-bottom: 10px;
+  fontFamily: Arimo;
   padding: 15px;
   border-width: 1px;
   border-color: ${theme.colors.border};
@@ -357,6 +359,7 @@ const AppointmentCard = styled(ListItem)`
 
 const LoadingText = styled.Text`
   text-align: center;
+  fontFamily: Arimo;
   color: ${theme.colors.text};
   font-size: 16px;
   margin-top: 20px;
@@ -364,6 +367,7 @@ const LoadingText = styled.Text`
 
 const EmptyText = styled.Text`
   text-align: center;
+  fontFamily: Arimo;
   color: ${theme.colors.text};
   font-size: 16px;
   margin-top: 20px;
@@ -373,6 +377,7 @@ const StatusBadge = styled.View<StyledProps>`
   background-color: ${(props: StyledProps) => getStatusColor(props.status) + '20'};
   padding: 4px 8px;
   border-radius: 4px;
+  fontFamily: Arimo;
   align-self: flex-start;
   margin-top: 8px;
 `;
@@ -381,12 +386,66 @@ const StatusText = styled.Text<StyledProps>`
   color: ${(props: StyledProps) => getStatusColor(props.status)};
   font-size: 12px;
   font-weight: 500;
+  fontFamily: Arimo;
 `;
 
 const ButtonContainer = styled.View`
   flex-direction: row;
   justify-content: space-between;
   margin-top: 8px;
+  fontFamily: Arimo;
+
+`;
+
+const SectionTitle = styled.Text`
+ fontFamily: Arimo;
+  font-size: 20px;
+  font-weight: bold;
+  color: ${theme.colors.text};
+  margin-bottom: 15px;
+  margin-top: 10px;
+`;
+
+const StatisticsGrid = styled.View`
+  flex-direction: row;
+  flex-wrap: wrap;
+  fontFamily: Arimo;
+  justify-content: space-between;
+  margin-bottom: 20px;
+`;
+
+const SpecialtyContainer = styled.View`
+  background-color: ${theme.colors.white};
+  border-radius: 8px;
+  padding: 16px;
+  fontFamily: Arimo;
+  margin-bottom: 20px;
+  border-width: 1px;
+  border-color: ${theme.colors.border};
+`;
+
+const SpecialtyItem = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  fontFamily: Arimo;
+  border-bottom-width: 1px;
+  border-bottom-color: ${theme.colors.border}20;
+`;
+
+const SpecialtyName = styled.Text`
+  font-size: 16px;
+  fontFamily: Arimo;
+  font-weight: 500;
+  color: ${theme.colors.text};
+`;
+
+const SpecialtyCount = styled.Text`
+  font-size: 14px;
+  fontFamily: Arimo;
+  color: ${theme.colors.primary};
+  font-weight: 600;
 `;
 
 export default DoctorDashboardScreen; 

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components/native';
 import { Input, Button, Text } from 'react-native-elements';
 import { useAuth } from '../contexts/AuthContext';
-import theme from '../styles/themes';
+import theme from '../styles/theme';
 import { ViewStyle } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -138,4 +138,4 @@ const ErrorText = styled.Text`
   margin-bottom: 10px;
 `;
 
-export default RegisterScreen;  
+export default RegisterScreen; 

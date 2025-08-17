@@ -56,6 +56,7 @@ const ProfileScreen: React.FC = () => {
         </ProfileCard>
 
         <Button
+          titleStyle={{fontFamily: 'Arimo'}}
           title="Editar Perfil"
           onPress={() => navigation.navigate('EditProfile' as any)}
           containerStyle={styles.button as ViewStyle}
@@ -63,6 +64,7 @@ const ProfileScreen: React.FC = () => {
         />
 
         <Button
+        titleStyle={{fontFamily: 'Arimo'}}
           title="Voltar"
           onPress={() => navigation.goBack()}
           containerStyle={styles.button as ViewStyle}
@@ -70,6 +72,7 @@ const ProfileScreen: React.FC = () => {
         />
 
         <Button
+        titleStyle={{fontFamily: 'Arimo'}}
           title="Sair"
           onPress={signOut}
           containerStyle={styles.button as ViewStyle}
@@ -87,6 +90,7 @@ const styles = {
   button: {
     marginBottom: 20,
     width: '100%',
+    borderRadius : 20
   },
   buttonStyle: {
     backgroundColor: theme.colors.primary,
@@ -113,6 +117,7 @@ const ScrollView = styled.ScrollView`
 
 const Title = styled.Text`
   font-size: 24px;
+  fontFamily: Arimo;
   font-weight: bold;
   color: ${theme.colors.text};
   margin-bottom: 20px;
@@ -133,6 +138,7 @@ const ProfileCard = styled.View`
 
 const Name = styled.Text`
   font-size: 20px;
+  fontFamily: Arimo;
   font-weight: bold;
   color: ${theme.colors.text};
   margin-bottom: 8px;
@@ -142,6 +148,7 @@ const Email = styled.Text`
   font-size: 16px;
   color: ${theme.colors.text};
   margin-bottom: 8px;
+  fontFamily: Arimo;
 `;
 
 const RoleBadge = styled.View<{ role: string }>`
@@ -163,6 +170,7 @@ const RoleBadge = styled.View<{ role: string }>`
 const RoleText = styled.Text`
   color: ${theme.colors.text};
   font-size: 14px;
+  fontFamily: Arimo;
   font-weight: 500;
 `;
 
@@ -170,6 +178,7 @@ const SpecialtyText = styled.Text`
   font-size: 16px;
   color: ${theme.colors.text};
   margin-top: 8px;
+  fontFamily: Arimo;
 `;
 
 export default ProfileScreen;

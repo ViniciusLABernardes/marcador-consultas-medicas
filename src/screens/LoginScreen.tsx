@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components/native';
 import { Input, Button, Text } from 'react-native-elements';
 import { useAuth } from '../contexts/AuthContext';
-import theme from '../styles/themes';
+import theme from '../styles/theme';
 import { ViewStyle } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -34,7 +34,7 @@ const LoginScreen: React.FC = () => {
 
   return (
     <Container>
-      <Title>Login</Title>
+      <Title>App Marcação de Consultas</Title>
       
       <Input
         placeholder="Email"
@@ -56,6 +56,7 @@ const LoginScreen: React.FC = () => {
       {error ? <ErrorText>{error}</ErrorText> : null}
 
       <Button
+       titleStyle={{fontFamily: 'Arimo'}}
         title="Entrar"
         onPress={handleLogin}
         loading={loading}
@@ -64,6 +65,7 @@ const LoginScreen: React.FC = () => {
       />
 
       <Button
+       titleStyle={{fontFamily: 'Arimo'}}
         title="Cadastrar Novo Paciente"
         onPress={() => navigation.navigate('Register')}
         containerStyle={styles.registerButton as ViewStyle}
@@ -75,7 +77,7 @@ const LoginScreen: React.FC = () => {
       </Text>
       <Text style={styles.credentials}>
         Admin: admin@example.com / 123456{'\n'}
-        Médicos: rato@example.com, rata@example.com, fausto@example.com / 123456
+        Médicos: joao@example.com, maria@example.com, pedro@example.com / 123456
       </Text>
     </Container>
   );
@@ -84,6 +86,7 @@ const LoginScreen: React.FC = () => {
 const styles = {
   input: {
     marginBottom: 15,
+    fontFamily: 'Arimo'
   },
   button: {
     marginTop: 10,
@@ -127,6 +130,7 @@ const Title = styled.Text`
   text-align: center;
   margin-bottom: 30px;
   color: ${theme.colors.text};
+  font-family : 'Arimo'
 `;
 
 const ErrorText = styled.Text`

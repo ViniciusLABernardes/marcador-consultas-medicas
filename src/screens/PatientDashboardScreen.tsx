@@ -10,6 +10,7 @@ import { RootStackParamList } from '../types/navigation';
 import theme from '../styles/theme';
 import Header from '../components/Header';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { fonts } from 'react-native-elements/dist/config';
 
 type PatientDashboardScreenProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'PatientDashboard'>;
@@ -87,9 +88,10 @@ const PatientDashboardScreen: React.FC = () => {
     <Container>
       <Header />
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        <Title>Minhas Consultas</Title>
+        <Title style={theme.typography.title}>Minhas Consultas</Title>
 
         <Button
+          titleStyle={{fontFamily: 'Arimo'}}
           title="Agendar Nova Consulta"
           onPress={() => navigation.navigate('CreateAppointment')}
           containerStyle={styles.button as ViewStyle}
@@ -97,12 +99,15 @@ const PatientDashboardScreen: React.FC = () => {
         />
 
         <Button
+        titleStyle={{fontFamily: 'Arimo'}}
           title="Meu Perfil"
           onPress={() => navigation.navigate('Profile')}
           containerStyle={styles.button as ViewStyle}
           buttonStyle={styles.buttonStyle}
         />
+
         <Button
+        titleStyle={{fontFamily: 'Arimo'}}
           title="Configurações"
           onPress={() => navigation.navigate('Settings')}
           containerStyle={styles.button as ViewStyle}
@@ -140,6 +145,7 @@ const PatientDashboardScreen: React.FC = () => {
         )}
 
         <Button
+        titleStyle={{fontFamily: 'Arimo'}}
           title="Sair"
           onPress={signOut}
           containerStyle={styles.button as ViewStyle}
@@ -157,10 +163,12 @@ const styles = {
   button: {
     marginBottom: 20,
     width: '100%',
+    borderRadius: 20
   },
   buttonStyle: {
     backgroundColor: theme.colors.primary,
     paddingVertical: 12,
+    
   },
   logoutButton: {
     backgroundColor: theme.colors.error,
@@ -187,8 +195,8 @@ const styles = {
     color: theme.colors.text,
   },
   settingsButton: {
-  backgroundColor: theme.colors.secondary,
-  paddingVertical: 12,
+    backgroundColor: theme.colors.secondary,
+    paddingVertical: 12,
   },
 };
 
@@ -219,6 +227,7 @@ const LoadingText = styled.Text`
   color: ${theme.colors.text};
   font-size: 16px;
   margin-top: 20px;
+  font-family: 'Arimo'
 `;
 
 const EmptyText = styled.Text`

@@ -4,7 +4,7 @@ import { FlatList, RefreshControl, TouchableOpacity } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
 import { FontAwesome } from '@expo/vector-icons';
 import { HeaderContainer, HeaderTitle } from '../components/Header';
-import theme from '../styles/themes';
+import theme from '../styles/theme';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Appointment } from '../types/appointments';
@@ -19,23 +19,24 @@ type HomeScreenProps = {
 const doctors: Doctor[] = [
   {
     id: '1',
-    name: 'Dr. Rato',
+    name: 'Dr. João Silva',
     specialty: 'Cardiologista',
-    image: 'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSpefQpRFzgJOBdMo7CRy2-Mig9-jMrrJAwO0WJwXbg6Ho0zSHrQNSOFyFXFoV1ShY1D6-2kXlobLkkLfuarmlN1g',
- },
- {
-  id: '2',
-  name: 'Dra. Rata',
-  specialty: 'Dermatologista',
-  image: 'https://static.sbt.com.br/noticias/images/139012.jpg',
-},
-{
-  id: '3',
-  name: 'Dr. FAUSTO',
-  specialty: 'Oftalmologista',
-  image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBarhs52ixfj2Nk-7DfDQ-7OjfJa96_8dMiw&s',
-},
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-F4lN1ZpSX7ghTc0u4U2ZQNjPCzKbe2d65Q&s',
+  },
+  {
+    id: '2',
+    name: 'Dra. Maria Santos',
+    specialty: 'Dermatologista',
+    image: 'https://mighty.tools/mockmind-api/content/human/97.jpg',
+  },
+  {
+    id: '3',
+    name: 'Dr. Pedro Oliveira',
+    specialty: 'Oftalmologista',
+    image: 'https://mighty.tools/mockmind-api/content/human/79.jpg',
+  },
 ];
+
 const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [refreshing, setRefreshing] = useState(false);

@@ -78,15 +78,15 @@ const AdminDashboardScreen: React.FC = () => {
         setAppointments(allAppointments);
       }
 
+      const stats = await statisticsService.getGeneralStatistics();
+      setStatistics(stats);
+
       // Carrega usuários
       const storedUsers = await AsyncStorage.getItem('@MedicalApp:users');
       if (storedUsers) {
         const allUsers: User[] = JSON.parse(storedUsers);
         setUsers(allUsers);
       }
-      // Carrega estatísticas
-      const stats = await statisticsService.getGeneralStatistics();
-      setStatistics(stats);
     } catch (error) {
       console.error('Erro ao carregar dados:', error);
     } finally {
@@ -127,6 +127,7 @@ const AdminDashboardScreen: React.FC = () => {
         <Title>Painel Administrativo</Title>
 
         <Button
+        titleStyle={{fontFamily: 'Arimo'}}
           title="Gerenciar Usuários"
           onPress={() => navigation.navigate('UserManagement')}
           containerStyle={styles.button as ViewStyle}
@@ -134,19 +135,22 @@ const AdminDashboardScreen: React.FC = () => {
         />
 
         <Button
+          titleStyle={{fontFamily: 'Arimo'}}
           title="Meu Perfil"
           onPress={() => navigation.navigate('Profile')}
           containerStyle={styles.button as ViewStyle}
           buttonStyle={styles.buttonStyle}
         />
-        
+
         <SectionTitle>Estatísticas Gerais</SectionTitle>
         {statistics && (
           <StatisticsGrid>
             <StatisticsCard
+            
               title="Total de Consultas"
               value={statistics.totalAppointments}
               color={theme.colors.primary}
+  
               subtitle="Todas as consultas"
             />
             <StatisticsCard
@@ -185,9 +189,6 @@ const AdminDashboardScreen: React.FC = () => {
             }
           </SpecialtyContainer>
         )}
-        
-        
-        
 
         <SectionTitle>Últimas Consultas</SectionTitle>
         {loading ? (
@@ -234,6 +235,7 @@ const AdminDashboardScreen: React.FC = () => {
         )}
 
         <Button
+          titleStyle={{fontFamily: 'Arimo'}}
           title="Sair"
           onPress={signOut}
           containerStyle={styles.button as ViewStyle}
@@ -251,6 +253,7 @@ const styles = {
   button: {
     marginBottom: 20,
     width: '100%',
+    borderRadius: 20
   },
   buttonStyle: {
     backgroundColor: theme.colors.primary,
@@ -297,6 +300,7 @@ const Container = styled.View`
 const Title = styled.Text`
   font-size: 24px;
   font-weight: bold;
+  fontFamily: Arimo;
   color: ${theme.colors.text};
   margin-bottom: 20px;
   text-align: center;
@@ -304,6 +308,7 @@ const Title = styled.Text`
 
 const SectionTitle = styled.Text`
   font-size: 20px;
+  fontFamily: Arimo;
   font-weight: bold;
   color: ${theme.colors.text};
   margin-bottom: 15px;
@@ -316,11 +321,13 @@ const AppointmentCard = styled(ListItem)`
   margin-bottom: 10px;
   padding: 15px;
   border-width: 1px;
+  fontFamily: Arimo;
   border-color: ${theme.colors.border};
 `;
 
 const LoadingText = styled.Text`
   text-align: center;
+  fontFamily: Arimo;
   color: ${theme.colors.text};
   font-size: 16px;
   margin-top: 20px;
@@ -328,6 +335,7 @@ const LoadingText = styled.Text`
 
 const EmptyText = styled.Text`
   text-align: center;
+  fontFamily: Arimo;
   color: ${theme.colors.text};
   font-size: 16px;
   margin-top: 20px;
@@ -336,7 +344,9 @@ const EmptyText = styled.Text`
 const StatusBadge = styled.View<StyledProps>`
   background-color: ${(props: StyledProps) => getStatusColor(props.status) + '20'};
   padding: 4px 8px;
+  fontFamily: Arimo;
   border-radius: 4px;
+  fontFamily: Arimo;
   align-self: flex-start;
   margin-top: 8px;
 `;
@@ -345,12 +355,14 @@ const StatusText = styled.Text<StyledProps>`
   color: ${(props: StyledProps) => getStatusColor(props.status)};
   font-size: 12px;
   font-weight: 500;
+  fontFamily: Arimo;
 `;
 
 const ButtonContainer = styled.View`
   flex-direction: row;
   justify-content: space-between;
   margin-top: 8px;
+  fontFamily: Arimo;
 `;
 
 const StatisticsGrid = styled.View`
@@ -358,6 +370,7 @@ const StatisticsGrid = styled.View`
   flex-wrap: wrap;
   justify-content: space-between;
   margin-bottom: 20px;
+  fontFamily: Arimo;
 `;
 
 const SpecialtyContainer = styled.View`
@@ -365,6 +378,7 @@ const SpecialtyContainer = styled.View`
   border-radius: 8px;
   padding: 16px;
   margin-bottom: 20px;
+  fontFamily: Arimo;
   border-width: 1px;
   border-color: ${theme.colors.border};
 `;
@@ -374,18 +388,21 @@ const SpecialtyItem = styled.View`
   justify-content: space-between;
   align-items: center;
   padding: 8px 0;
+  fontFamily: Arimo;
   border-bottom-width: 1px;
   border-bottom-color: ${theme.colors.border}20;
 `;
 
 const SpecialtyName = styled.Text`
   font-size: 16px;
+  fontFamily: Arimo;
   font-weight: 500;
   color: ${theme.colors.text};
 `;
 
 const SpecialtyCount = styled.Text`
   font-size: 14px;
+  fontFamily: Arimo;
   color: ${theme.colors.primary};
   font-weight: 600;
 `;

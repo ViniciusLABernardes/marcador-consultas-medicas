@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import { ViewStyle, TouchableOpacity } from 'react-native';
-import theme from '../styles/themes';
+import theme from '../styles/theme';
 
 interface TimeSlotListProps {
   onSelectTime: (time: string) => void;

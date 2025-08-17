@@ -12,28 +12,28 @@ const STORAGE_KEYS = {
 const mockDoctors = [
   {
     id: '1',
-    name: 'Dr. Rato',
-    email:'rato@example.com',
+    name: 'Dr. João Silva',
+    email: 'joao@example.com',
     role: 'doctor' as const,
-    specialty: 'Cardiologista',
-    image: 'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSpefQpRFzgJOBdMo7CRy2-Mig9-jMrrJAwO0WJwXbg6Ho0zSHrQNSOFyFXFoV1ShY1D6-2kXlobLkkLfuarmlN1g',
- },
- {
-  id: '2',
-  name: 'Dra. Rata',
-  email:'rata@example.com',
-  role: 'doctor' as const,
-  specialty: 'Dermatologista',
-  image: 'https://static.sbt.com.br/noticias/images/139012.jpg',
-},
-{
-  id: '3',
-  name: 'Dr. FAUSTO',
-  email:'fausto@example.com',
-  role: 'doctor' as const,
-  specialty: 'Oftalmologista',
-  image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBarhs52ixfj2Nk-7DfDQ-7OjfJa96_8dMiw&s',
-}
+    specialty: 'Cardiologia',
+    image: 'https://randomuser.me/api/portraits/men/1.jpg',
+  },
+  {
+    id: '2',
+    name: 'Dra. Maria Santos',
+    email: 'maria@example.com',
+    role: 'doctor' as const,
+    specialty: 'Pediatria',
+    image: 'https://randomuser.me/api/portraits/women/1.jpg',
+  },
+  {
+    id: '3',
+    name: 'Dr. Pedro Oliveira',
+    email: 'pedro@example.com',
+    role: 'doctor' as const,
+    specialty: 'Ortopedia',
+    image: 'https://randomuser.me/api/portraits/men/2.jpg',
+  },
 ];
 
 // Admin mockado

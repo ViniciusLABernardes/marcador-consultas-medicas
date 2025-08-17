@@ -42,7 +42,7 @@ const availableDoctors: Doctor[] = [
     id: '1',
     name: 'Dr. João Silva',
     specialty: 'Cardiologia',
-    image: 'https://randomuser.me/api/portraits/men/1.jpg',
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-F4lN1ZpSX7ghTc0u4U2ZQNjPCzKbe2d65Q&s',
   },
   {
     id: '2',
@@ -111,10 +111,9 @@ const CreateAppointmentScreen: React.FC = () => {
 
       // Salva lista atualizada
       await AsyncStorage.setItem('@MedicalApp:appointments', JSON.stringify(appointments));
-
-      // Envia notificação para o médico
+      
       await notificationService.notifyNewAppointment(selectedDoctor.id, newAppointment);
-
+      
       alert('Consulta agendada com sucesso!');
       navigation.goBack();
     } catch (err) {
@@ -142,18 +141,21 @@ const CreateAppointmentScreen: React.FC = () => {
         <TimeSlotList
           onSelectTime={setSelectedTime}
           selectedTime={selectedTime}
+     
         />
 
         <SectionTitle>Selecione um Médico</SectionTitle>
         <DoctorList
           doctors={availableDoctors}
           onSelectDoctor={setSelectedDoctor}
+          
           selectedDoctorId={selectedDoctor?.id}
         />
 
         {error ? <ErrorText>{error}</ErrorText> : null}
 
         <Button
+          titleStyle={{fontFamily: 'Arimo'}}
           title="Agendar"
           onPress={handleCreateAppointment}
           loading={loading}
@@ -162,6 +164,7 @@ const CreateAppointmentScreen: React.FC = () => {
         />
 
         <Button
+          titleStyle={{fontFamily: 'Arimo'}}
           title="Cancelar"
           onPress={() => navigation.goBack()}
           containerStyle={styles.button as ViewStyle}
@@ -182,6 +185,7 @@ const styles = {
   button: {
     marginTop: 10,
     width: '100%',
+    borderRadius: 20
   },
   buttonStyle: {
     backgroundColor: theme.colors.primary,
@@ -200,6 +204,7 @@ const Container = styled.View`
 
 const Title = styled.Text`
   font-size: 24px;
+  fontFamily: Arimo;
   font-weight: bold;
   color: ${theme.colors.text};
   margin-bottom: 20px;
@@ -209,6 +214,7 @@ const Title = styled.Text`
 const SectionTitle = styled.Text`
   font-size: 18px;
   font-weight: bold;
+  fontFamily: Arimo;
   color: ${theme.colors.text};
   margin-bottom: 10px;
   margin-top: 10px;
@@ -217,6 +223,7 @@ const SectionTitle = styled.Text`
 const ErrorText = styled.Text`
   color: ${theme.colors.error};
   text-align: center;
+  fontFamily: Arimo;
   margin-bottom: 10px;
 `;
 

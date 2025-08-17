@@ -207,6 +207,7 @@ const SettingsScreen: React.FC = () => {
         </SettingsCard>
 
         <Button
+         titleStyle={{fontFamily: 'Arimo'}}
           title="Criar Backup"
           onPress={handleCreateBackup}
           containerStyle={styles.button as ViewStyle}
@@ -215,6 +216,7 @@ const SettingsScreen: React.FC = () => {
         />
 
         <Button
+         titleStyle={{fontFamily: 'Arimo'}}
           title="Limpar Cache"
           onPress={handleClearCache}
           containerStyle={styles.button as ViewStyle}
@@ -223,6 +225,7 @@ const SettingsScreen: React.FC = () => {
 
         <SectionTitle>Ações Perigosas</SectionTitle>
         <Button
+         titleStyle={{fontFamily: 'Arimo'}}
           title="Apagar Todos os Dados"
           onPress={handleClearAllData}
           containerStyle={styles.button as ViewStyle}
@@ -230,6 +233,7 @@ const SettingsScreen: React.FC = () => {
         />
 
         <Button
+        titleStyle={{fontFamily: 'Arimo'}}
           title="Voltar"
           onPress={() => navigation.goBack()}
           containerStyle={styles.button as ViewStyle}
@@ -247,6 +251,7 @@ const styles = {
   button: {
     marginBottom: 15,
     width: '100%',
+    borderRadius: 20
   },
   buttonStyle: {
     backgroundColor: theme.colors.primary,
@@ -280,6 +285,7 @@ const LoadingContainer = styled.View`
 const LoadingText = styled.Text`
   font-size: 16px;
   color: ${theme.colors.text};
+  fontFamily: Arimo;
 `;
 
 const Title = styled.Text`
@@ -288,6 +294,7 @@ const Title = styled.Text`
   color: ${theme.colors.text};
   margin-bottom: 20px;
   text-align: center;
+  fontFamily: Arimo;
 `;
 
 const SectionTitle = styled.Text`
@@ -296,6 +303,7 @@ const SectionTitle = styled.Text`
   color: ${theme.colors.text};
   margin-bottom: 10px;
   margin-top: 20px;
+  fontFamily: Arimo;
 `;
 
 const SettingsCard = styled.View`
@@ -317,12 +325,14 @@ const InfoItem = styled.View`
 
 const InfoLabel = styled.Text`
   font-size: 16px;
+  fontFamily: Arimo;
   color: ${theme.colors.text};
 `;
 
 const InfoValue = styled.Text`
   font-size: 16px;
   font-weight: bold;
+  fontFamily: Arimo;
   color: ${theme.colors.primary};
 `;
 
