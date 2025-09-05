@@ -15,8 +15,15 @@
 export type Appointment = {
   id: string;
   doctorId: string;
+  patientId:string;
   date: string;
   time: string;
   description: string;
   status: string;
 }; 
+
+export type Patient = {
+   id: string;
+    name: string;
+    image: string;
+}
